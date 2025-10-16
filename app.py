@@ -29,16 +29,16 @@ def send_photo(photo_url, caption):
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    print("Webhook triggered")
-    print("Headers:", dict(request.headers))
-    print("Raw body:", request.data.decode("utf-8"))
+    print("Webhook triggered", flush=True)
+    print("Headers:", dict(request.headers), flush=True)
+    print("Raw body:", request.data.decode("utf-8"), flush=True)
 
     if not request.is_json:
-        print("⚠️ Request is not JSON")
+        print("⚠️ Request is not JSON", flush=True)
         return "Unsupported Media Type", 415
 
     data = request.get_json()
-    print("Parsed JSON:", data)
+    print("Parsed JSON:", data, flush=True)
 
     message = data.get("message", "🚨 Alert received")
     chart_url = data.get("chart_image_url")
