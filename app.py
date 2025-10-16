@@ -30,11 +30,13 @@ def send_photo(photo_url, caption):
 @app.route("/webhook", methods=["POST"])
 def webhook():
     print("Webhook triggered")
+
+    if not request.is_json:
+        print("⚠️ Request is not JSON")
+        return "Unsupported Media Type", 415
+
     data = request.get_json()
     print("Received data:", data)
-
-    if not data:
-        return "Invalid JSON", 400
 
     message = data.get("message", "🚨 Alert received")
     chart_url = data.get("chart_image_url")
@@ -45,6 +47,11 @@ def webhook():
         send_message(message)
 
     return "OK", 200
+
+# Optional: catch-all route to silence 404s from root path
+@app.route("/", methods=["GET", "POST"])
+def root():
+    return "This endpoint is not used.", 404
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
