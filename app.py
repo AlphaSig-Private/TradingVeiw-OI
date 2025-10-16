@@ -1,4 +1,3 @@
-app.py
 from flask import Flask, request
 import requests
 import os
@@ -7,7 +6,7 @@ app = Flask(__name__)
 
 # Telegram bot credentials (set these in Render's environment settings)
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-TELEGRAM_CHAT_ID = "-1003114080821"  # Your new Telegram group ID
+TELEGRAM_CHAT_ID = "-1003114080821"  # Your Telegram group ID
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
@@ -42,4 +41,3 @@ def send_photo(photo_url, caption):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
-# Initial webhook code
